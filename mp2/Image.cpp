@@ -205,8 +205,8 @@ void Image::scale(double factor) {
 
 void Image::scale(unsigned w, unsigned h) {
   PNG* toScale = new PNG(w, h);
-  double factorX = static_cast<int>(w) / static_cast<int>(this -> width());
-  double factorY = static_cast<int>(h) / static_cast<int>(this -> height());
+  double factorX = static_cast<double>(w) / static_cast<double>(this -> width());
+  double factorY = static_cast<double>(h) / static_cast<double>(this -> height());
 
   for (unsigned x = 0; x < w; x++) {
     for (unsigned y = 0; y < h; y++) {
