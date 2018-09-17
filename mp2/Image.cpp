@@ -204,4 +204,27 @@ void Image::scale(double factor) {
 }
 
 void Image::scale(unsigned w, unsigned h) {
+  PNG* toScale = new PNG(w, h);
+  double factorX = static_cast<int>(w) / static_cast<int>(this -> width());
+  double factorY = static_cast<int>(h) / static_cast<int>(this -> height());
+
+  for (unsigned x = 0; x < w; x++) {
+    for (unsigned y = 0; y < h; y++) {
+      cs225::HSLAPixel & pixel = this -> getPixel(static_cast<unsigned int>(x*(1/factorX)), static_cast<unsigned int>(y*(1/factorY)));
+      cs225::HSLAPixel & toReplace = (*toScale).getPixel(x, y);
+      toReplace = pixel;
+    }
+  }
+
+  this -> resize(w,h);
+
+  for (unsigned int x = 0; x < w; x++) {
+    for (unsigned int y = 0; y < h; y++) {
+      cs225::HSLAPixel & pixel1 = this -> getPixel(x, y);
+      cs225::HSLAPixel & pixel2 = toScale -> getPixel(x, y);
+      pixel1 = pixel2;
+    }
+  }
+
+  delete toScale;
 }
