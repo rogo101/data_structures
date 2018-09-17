@@ -27,7 +27,7 @@ Image createRainbowImage() {
 //
 TEST_CASE("Image lighten() lightens pixels by 0.1", "[weight=1][part=1]") {
   Image img = createRainbowImage();
-  
+
   Image result = createRainbowImage();
   result.lighten();
 
@@ -36,7 +36,7 @@ TEST_CASE("Image lighten() lightens pixels by 0.1", "[weight=1][part=1]") {
 
 TEST_CASE("Image lighten() does not lighten a pixel above 1.0", "[weight=1][part=1]") {
   Image img = createRainbowImage();
-  
+
   Image result = createRainbowImage();
   result.lighten();
 
@@ -45,7 +45,7 @@ TEST_CASE("Image lighten() does not lighten a pixel above 1.0", "[weight=1][part
 
 TEST_CASE("Image darken(0.2) darkens pixels by 0.2", "[weight=1][part=1]") {
   Image img = createRainbowImage();
-  
+
   Image result = createRainbowImage();
   result.darken(0.2);
 
@@ -54,7 +54,7 @@ TEST_CASE("Image darken(0.2) darkens pixels by 0.2", "[weight=1][part=1]") {
 
 TEST_CASE("Image darken(0.2) does not darken a pixel below 0.0", "[weight=1][part=1]") {
   Image img = createRainbowImage();
-  
+
   Image result = createRainbowImage();
   result.darken(0.2);
 
@@ -67,7 +67,7 @@ TEST_CASE("Image darken(0.2) does not darken a pixel below 0.0", "[weight=1][par
 //
 TEST_CASE("Image saturate() saturates a pixels by 0.1", "[weight=1][part=1]") {
   Image img = createRainbowImage();
-  
+
   Image result = createRainbowImage();
   result.saturate();
 
@@ -80,7 +80,7 @@ TEST_CASE("Image saturate() saturates a pixels by 0.1", "[weight=1][part=1]") {
 //
 TEST_CASE("Image rotateColor(double) rotates the color", "[weight=1][part=1]") {
   Image img = createRainbowImage();
-  
+
   Image result = createRainbowImage();
   result.rotateColor(90);
 
@@ -89,7 +89,7 @@ TEST_CASE("Image rotateColor(double) rotates the color", "[weight=1][part=1]") {
 
 TEST_CASE("Image rotateColor(double) keeps the hue in the range 0..360", "[weight=1][part=1]") {
   Image img = createRainbowImage();
-  
+
   Image result = createRainbowImage();
   result.rotateColor(90);
   REQUIRE( result.getPixel(340, 90).h == 70 );
@@ -104,7 +104,7 @@ TEST_CASE("Image rotateColor(double) keeps the hue in the range 0..360", "[weigh
 //
 TEST_CASE("Image scale(2.0) results in the correct width/height", "[weight=1][part=1]") {
   Image img = createRainbowImage();
-  
+
   Image result = createRainbowImage();
   result.scale(2.0);
 
@@ -113,7 +113,7 @@ TEST_CASE("Image scale(2.0) results in the correct width/height", "[weight=1][pa
 
 TEST_CASE("Image scale(0.5) results in the correct width/height", "[weight=1][part=1]") {
   Image img = createRainbowImage();
-  
+
   Image result = createRainbowImage();
   result.scale(0.5);
 
@@ -122,7 +122,7 @@ TEST_CASE("Image scale(0.5) results in the correct width/height", "[weight=1][pa
 
 TEST_CASE("Image scale(2) scales pixel data in a reasonable way", "[weight=1][part=1]") {
   Image img = createRainbowImage();
-  
+
   Image result = createRainbowImage();
   result.scale(2);
 
@@ -132,7 +132,7 @@ TEST_CASE("Image scale(2) scales pixel data in a reasonable way", "[weight=1][pa
 
 TEST_CASE("Image scale(0.5) scales pixel data in a reasonable way", "[weight=1][part=1]") {
   Image img = createRainbowImage();
-  
+
   Image result = createRainbowImage();
   result.scale(0.5);
 
