@@ -27,6 +27,7 @@ class Truck : public Drawable
     void clear();
 
   public:
+    void draw(PNG* canvas) const;
     Truck(const Vector2& center);
     Truck(const Truck& other);
     ~Truck();
@@ -34,4 +35,3 @@ class Truck : public Drawable
     Vector2 center() const;
     void set_center(const Vector2& center);
 };
-

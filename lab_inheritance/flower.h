@@ -9,13 +9,19 @@
 #pragma once
 
 #include "shape.h"
+#include "circle.h"
+#include "rectangle.h"
+#include "color.h"
+#include "drawable.h"
+#include "triangle.h"
+#include "line.h"
 
 class Flower : public Drawable
 {
   private:
-    Shape stem;
-    Shape pistil; // center piece of flower
-    Shape leaf;
+    Shape* stem;
+    Shape* pistil; // center piece of flower
+    Shape* leaf;
 
     void drawPetals(PNG* canvas, const Vector2& center, int x, int y) const;
 
