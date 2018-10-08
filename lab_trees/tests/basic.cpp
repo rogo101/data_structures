@@ -158,10 +158,10 @@ TEST_CASE("test_InorderTraversal", "[weight=10]"){
     REQUIRE( (*it)->elem == 24 ); ++it;
     REQUIRE( (*it)->elem == 39 ); ++it;
     REQUIRE( (*it)->elem == 47 ); ++it;
-    REQUIRE( (*it)->elem == 52 ); ++it;  
+    REQUIRE( (*it)->elem == 52 ); ++it;
     REQUIRE( (*it)->elem == 69 ); ++it;
     REQUIRE( (*it)->elem == 71 ); ++it;
-    REQUIRE( (*it)->elem == 80 ); ++it;  
+    REQUIRE( (*it)->elem == 80 ); ++it;
     REQUIRE( (*it)->elem == 90 ); ++it;
 
 }

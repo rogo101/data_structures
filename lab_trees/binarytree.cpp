@@ -78,10 +78,27 @@ void BinaryTree<T>::printLeftToRight(const Node* subRoot) const
     template <typename T>
 void BinaryTree<T>::mirror()
 {
-    //your code here
+    if (root == NULL) {
+      return;
+    }
+    mirror(root);
 }
+/**
+* Helper Function
+* @param subRoot
+*/
 
-
+template <typename T>
+void BinaryTree<T>::mirror(Node * subRoot) {
+  if (subRoot == NULL) {
+    return;
+  }
+  Node * curr = subRoot -> right;
+  subRoot -> right = subRoot -> left;
+  subRoot -> left = curr;
+  mirror(subRoot -> right);
+  mirror(subRoot -> left);
+}
 /**
  * isOrdered() function iterative version
  * @return True if an in-order traversal of the tree would produce a
@@ -91,8 +108,30 @@ void BinaryTree<T>::mirror()
 template <typename T>
 bool BinaryTree<T>::isOrderedIterative() const
 {
-    // your code here
-    return false;
+  stack<T> check;
+  int mark;
+  InorderTraversal<int> temp(root);
+  //pushes all items into a stack
+  for (TreeTraversal<int>::Iterator ctr = temp.begin(); ctr != temp.end(); ++ctr) {
+    check.push((*ctr) -> elem);
+  }
+  if (check.empty() == true) {
+    return true;
+  }
+  //places the mark as the greatest element "in theory"
+  else {
+    mark = check.top();
+    check.pop();
+  }
+  //loop to check if it is in order
+  while (check.empty() == false) {
+    if (mark < check.top()) {
+      return false;
+    }
+    mark = check.top();
+    check.pop();
+  }
+  return true;
 }
 
 /**
@@ -105,10 +144,39 @@ template <typename T>
 bool BinaryTree<T>::isOrderedRecursive() const
 {
     // your code here
-    return false;
+    return isOrderedHelper(root);
 }
-
-
+/**
+*@param subroot
+* @return bool
+*/
+template <typename T>
+bool BinaryTree<T>::isOrderedHelper(Node * subroot) const {
+  if (subroot -> right == NULL && subroot -> left == NULL) {
+    return true;
+  }
+  if (subroot -> left == NULL) {
+    if (subroot -> right -> elem < subroot -> elem) {
+      return false;
+    }
+    return isOrderedHelper(subroot -> right);
+  }
+  else if (subroot -> right == NULL) {
+    if (subroot -> left -> elem > subroot -> elem) {
+      return false;
+    }
+    return isOrderedHelper(subroot -> left);
+  }
+  else {
+    if (subroot -> left -> elem > subroot -> elem) {
+      return false;
+    }
+    if (subroot -> right -> elem < subroot -> elem) {
+      return false;
+    }
+    return (isOrderedHelper(subroot -> left) && isOrderedHelper(subroot -> right));
+  }
+}
 /**
  * creates vectors of all the possible paths from the root of the tree to any leaf
  * node and adds it to another vector.
@@ -121,21 +189,51 @@ template <typename T>
 void BinaryTree<T>::getPaths(vector<vector<T> > &paths) const
 {
     // your code here
+    vector<T> boonk;
+    getPathHelper(root, paths, boonk);
 }
 
+/**
+* @param a
+* @param paths
+* @param boonk
+*/
+template <typename T>
+void BinaryTree<T>::getPathHelper(Node * a, vector<vector<T>> &paths, vector<T> boonk) const {
+  if (a == NULL)
+    return;
+  if (a -> left == NULL && a -> right == NULL){
+    boonk.push_back(a -> elem);
+    paths.push_back(boonk);
+    return;
+  }
+  boonk.push_back(a -> elem);
+  if (a -> left != NULL) {
+    getPathHelper(a -> left, paths, boonk);
+  }
+  if (a -> right != NULL) {
+    getPathHelper(a -> right, paths, boonk);
+  }
+}
 
 /**
- * Each node in a tree has a distance from the root node - the depth of that
+ * Each node in a tree has a distanceance from the root node - the depth of that
  * node, or the number of edges along the path from that node to the root. This
- * function returns the sum of the distances of all nodes to the root node (the
+ * function returns the sum of the distanceances of all nodes to the root node (the
  * sum of the depths of all the nodes). Your solution should take O(n) time,
  * where n is the number of nodes in the tree.
- * @return The sum of the distances of all nodes to the root
+ * @return The sum of the distanceances of all nodes to the root
  */
 template <typename T>
 int BinaryTree<T>::sumDistances() const
 {
-    // your code here
-    return -1;
+    return sumHelper(root, 0);
 }
 
+template <typename T>
+int BinaryTree<T>::sumHelper(Node * subRoot, int distance) const {
+  if (subRoot == NULL) {
+    return 0;
+  }
+  return distance + sumHelper(subRoot -> left, distance + 1) + sumHelper(subRoot -> right, distance + 1);
+}
