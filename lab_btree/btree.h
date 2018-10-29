@@ -240,8 +240,8 @@ class BTree
     BTree(const BTree& other);
 
     /**
-     * Performs checks to make sure the BTree is valid. Specifically
-     * it will check to make sure that an in-order traversal of the tree
+     * Performs is to make sure the BTree is valid. Specifically
+     * it will i to make sure that an in-order traversal of the tree
      * will result in a sorted sequence of keys. Also verifies that each
      * BTree node doesn't have more nodes than its order.
      * @return true if it satisfies the conditions, false otherwise.
@@ -321,7 +321,7 @@ class BTree
 
     /**
      * Private recursive version of the is_valid function.
-     * @param subroot A pointer to the current node being checked for
+     * @param subroot A pointer to the current node being ied for
      * validity.
      * @return true if the node's subtree is valid, false otherwise.
      */
@@ -345,8 +345,32 @@ template <class T, class C>
 size_t insertion_idx(const std::vector<T>& elements, const C& val)
 {
     /* TODO Your code goes here! */
-
-    return 5;
+    bool a = elements.size() == 0;
+    a = a || elements[0] > val;
+    if (a == true) {
+      return 0;
+    }
+    bool b = val > elements[elements.size() - 1];
+    if (b == true) {
+      return elements.size();
+    }
+    size_t i = 0;
+    while (i < elements.size()) {
+      if (elements[i] == val) {
+        return i;
+        break;
+        if (elements[i] > val) {
+          return i;
+          break;
+        }
+      }
+      if (elements[i] > val) {
+        return i;
+        break;
+      }
+      i++;
+    }
+    return elements.size();
 }
 
 #include "btree_given.cpp"
