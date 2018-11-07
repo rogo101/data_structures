@@ -10,11 +10,11 @@
 
 using namespace std;
 
-
+/*Takes in a pixel and converts it to L, U, V format specified in this MP*/
 Point<3> convertToXYZ(LUVAPixel pixel) {
     return Point<3>( pixel.l, pixel.u, pixel.v );
 }
-
+/*The main part of the program: returns a pointer to mosaic made up of many tile images.*/
 MosaicCanvas* mapTiles(SourceImage const& theSource,
                        vector<TileImage>& theTiles)
 {
