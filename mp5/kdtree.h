@@ -248,6 +248,7 @@ class KDTree
     /** Internal representation, root and size **/
     KDTreeNode *root;
     size_t size;
+    vector<Point<Dim>> points;
 
     /** Helper function for grading */
     int getPrintData(KDTreeNode * subroot) const;
@@ -259,6 +260,17 @@ class KDTree
     /**
      * @todo Add your helper functions here.
      */
+
+     KDTreeNode * createRootPointer(int s, int e);
+
+     Point<Dim> recursiveLocator(int s, int e, int d, const Point<Dim> & a, const Point<Dim> & b) const;
+
+     void Select(int s, int e, int d, int pointerCheckValue);
+
+     void treeConstructor(int s, int e, int d);
+
+     void _destroy(KDTreeNode* value);
+
 };
 
 #include "kdtree.hpp"
