@@ -60,7 +60,7 @@ class heap
 
     /**
      * Updates the element at the provided index of the heap array.
-     * The update is done in such a way that the array will be 
+     * The update is done in such a way that the array will be
      * corrected, so it will remain as a valid heap.
      *
      * @param idx The element to be inserted.
