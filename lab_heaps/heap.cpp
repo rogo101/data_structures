@@ -94,7 +94,6 @@ heap<T, Compare>::heap()
     // @TODO Depending on your implementation, this function may or may
     ///   not need modifying
     _elems.push_back(T());
-
 }
 
 template <class T, class Compare>
@@ -155,7 +154,9 @@ void heap<T, Compare>::updateElem(const size_t & idx, const T& elem)
 {
     // @TODO In-place updates the value stored in the heap array at idx
     // Corrects the heap to remain as a valid heap even after update
-      heapifyDown(idx + 1);
+    _elems[idx + 1] = elem;
+    heapifyUp(idx + 1);
+    heapifyDown(idx + 1);
 }
 
 
