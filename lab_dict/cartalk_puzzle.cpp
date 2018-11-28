@@ -33,10 +33,12 @@ vector<std::tuple<std::string, std::string, std::string>> cartalk_puzzle(Pronoun
         if(word.size() < 5){
           continue;
         }
-        string possHomophon1 = word.substr(1);
-        string possHomophon2 = word[0] + word.substr(2);
-        if(d.homophones(word, possHomophon1) && d.homophones(word, possHomophon2)){
-          ret.push_back(tuple<string, string, string>(word, possHomophon1, possHomophon2));
+        string a = word.substr(1);
+        string b = word[0] + word.substr(2);
+        if(d.homophones(word, a)){
+          if (d.homophones(word, b)) {
+            ret.push_back(tuple<string, string, string>(word, a, b));
+          }
         }
       }
     }
