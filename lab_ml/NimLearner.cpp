@@ -5,6 +5,9 @@
 
 #include "NimLearner.h"
 #include <ctime>
+#include <string>
+
+using namespace std;
 
 
 /**
@@ -26,6 +29,31 @@
  */
 NimLearner::NimLearner(unsigned startingTokens) : g_(true, true) {
     /* Your code goes here! */
+
+  startingVertex_ = "p1-" + to_string(startingTokens);
+
+  int i;
+  for (int i = startingTokens; i >= 0; i--) {
+  string one = "p1-" + to_string(i);
+  string two = "p2-" + to_string(i);
+  g_.insertVertex(one);
+  g_.insertVertex(two);
+  }
+
+  for (i = startingTokens; i > 1; i--) {
+    g_.insertEdge("p1-" + to_string(i), + "p2-" + to_string(i-2));
+    g_.setEdgeWeight("p1-" + to_string(i), + "p2-" + to_string(i-2), 0);
+    g_.insertEdge("p2-" + to_string(i), + "p1-" + to_string(i-2));
+    g_.setEdgeWeight("p2-" + to_string(i), + "p1-" + to_string(i-2), 0);
+  }
+
+  for (i = startingTokens; i > 0; i--) {
+    g_.insertEdge("p1-" + to_string(i), + "p2-" + to_string(i-1));
+    g_.setEdgeWeight("p1-" + to_string(i), + "p2-" + to_string(i-1), 0);
+    g_.insertEdge("p2-" + to_string(i), + "p1-" + to_string(i-1));
+    g_.setEdgeWeight("p2-" + to_string(i), + "p1-" + to_string(i-1), 0);
+  }
+
 }
 
 /**
@@ -37,9 +65,24 @@ NimLearner::NimLearner(unsigned startingTokens) : g_(true, true) {
  *
  * @returns A random path through the state space graph.
  */
-std::vector<Edge> NimLearner::playRandomGame() const {
+vector<Edge> NimLearner::playRandomGame() const {
   vector<Edge> path;
  /* Your code goes here! */
+
+  Vertex begin = startingVertex_, after;
+  vector<Vertex> vertices;
+  int step;
+  while (g_.getAdjacent(begin).size() != 0) {
+    vertices = g_.getAdjacent(begin);
+    step = rand() % vertices.size();
+    after = vertices[step];
+    path.push_back(g_.getEdge(begin, after));
+    begin = after;
+  }
+  if (startingVertex_ != begin) {
+    return path;
+  }
+  playRandomGame();
   return path;
 }
 
@@ -59,8 +102,23 @@ std::vector<Edge> NimLearner::playRandomGame() const {
  *
  * @param path A path through the a game of Nim to learn.
  */
-void NimLearner::updateEdgeWeights(const std::vector<Edge> & path) {
+void NimLearner::updateEdgeWeights(const vector<Edge> & path) {
  /* Your code goes here! */
+
+  Edge e;
+  int i = 1, index = path.size() - 1, prev;
+  while (index >= 0) {
+    e = path[index];
+    prev = g_.getEdgeWeight(e.source, e.dest);
+    g_.setEdgeWeight(e.source, e.dest, prev + i);
+    i = i * -1;
+    if (index > -1) {
+      index--;
+    }
+    else {
+      break;
+    }
+  }
 }
 
 /**
