@@ -65,4 +65,6 @@ private:
   Vertex sink_;
 
   int maxFlow_;
+
+  void Recurse(Vertex a, Vertex b);
 };

@@ -22,6 +22,9 @@ NetworkFlow::NetworkFlow(Graph & startingGraph, Vertex source, Vertex sink) :
   g_(startingGraph), residual_(Graph(true,true)), flow_(Graph(true,true)), source_(source), sink_(sink) {
 
   // YOUR CODE HERE
+  residual_.insertVertex(source);
+  flow_.insertVertex(source);
+  Recurse(source, sink);
 }
 
   /**
@@ -34,7 +37,7 @@ NetworkFlow::NetworkFlow(Graph & startingGraph, Vertex source, Vertex sink) :
    * @@params: visited -- A set of vertices we have visited
    */
 
-bool NetworkFlow::findAugmentingPath(Vertex source, Vertex sink, 
+bool NetworkFlow::findAugmentingPath(Vertex source, Vertex sink,
   std::vector<Vertex> &path, std::set<Vertex> &visited) {
 
   if (visited.count(source) != 0)
@@ -84,7 +87,24 @@ bool NetworkFlow::findAugmentingPath(Vertex source, Vertex sink, std::vector<Ver
 
 int NetworkFlow::pathCapacity(const std::vector<Vertex> & path) const {
   // YOUR CODE HERE
-  return 0;
+  Vertex vertex1, vertex2;
+  if (path.size() <= 0){
+    return 0;
+  }
+  int pathCapacityValue = 0;
+  for(size_t i = 0; i < path.size() - 1; i++){
+    vertex1 = path[i];
+    vertex2 = path[i + 1];
+    if (residual_.vertexExists(vertex1) == true) {
+      if (residual_.vertexExists(vertex2)){
+      pathCapacityValue = pathCapacityValue + residual_.getEdgeWeight(vertex1, vertex2);
+      }
+    }
+    else {
+      return pathCapacityValue;
+    }
+  }
+  return pathCapacityValue;
 }
 
   /**
@@ -116,3 +136,42 @@ const Graph & NetworkFlow::getResidualGraph() const {
   return residual_;
 }
 
+void NetworkFlow::Recurse(Vertex a, Vertex b) {
+  Vertex vertex1;
+  vector<Vertex> vertex2 = g_.getAdjacent(a);
+  if(a == b){
+    return;
+  }
+  if(vertex2.size() <= 0){
+    return;
+  }
+  for(size_t i = 0; i < vertex2.size(); i++){
+    vertex1 = vertex2[i];
+
+    if(residual_.vertexExists(vertex1) == false){
+      residual_.insertVertex(vertex1);
+      residual_.insertEdge(a, vertex1);
+      residual_.setEdgeWeight(a, vertex1, g_.getEdgeWeight(a, vertex1));
+      residual_.insertEdge(vertex1, a);
+      residual_.setEdgeWeight(vertex1, a, 0);
+    }
+    else {
+      residual_.insertEdge(a, vertex1);
+      residual_.setEdgeWeight(a, vertex1, g_.getEdgeWeight(a, vertex1));
+      residual_.insertEdge(vertex1, a);
+      residual_.setEdgeWeight(vertex1, a, 0);
+    }
+
+    if(flow_.vertexExists(vertex1) == false){
+      flow_.insertVertex(vertex1);
+      flow_.insertEdge(a, vertex1);
+      flow_.setEdgeWeight(a, vertex1, 0);
+    }
+    else {
+      flow_.insertEdge(a, vertex1);
+      flow_.setEdgeWeight(a, vertex1, 0);
+    }
+
+    Recurse(vertex1, b);
+  }
+}
